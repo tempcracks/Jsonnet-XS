@@ -1,0 +1,27 @@
+# brian's GitHub Actions demonstrations
+# This file is licensed under the Artistic License 2.0
+#
+# Only run this workflow when the branch contains a particular substring
+#
+# https://github.com/briandfoy/github_actions
+# https://github.com/features/actions
+# https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions#onpushpull_requestbranchestags
+name: branches-ubuntu
+
+on:
+    push:
+# this will only run on branches starting with the string 'ubuntu',
+# and not otherwise. You can effectively turn off the action unless
+# the branch name targets it.
+        branches:
+            - 'ubuntu-*'
+jobs:
+    check:
+        runs-on: ubuntu-latest
+
+        steps:
+            - uses: actions/checkout@v2
+            - name: Platform check
+              run: uname -a
+            - name: Just pass
+              run: true

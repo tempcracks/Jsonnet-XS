@@ -1,0 +1,42 @@
+# brian's GitHub Actions demonstrations
+# This file is licensed under the Artistic License 2.0
+#
+# Each step can look for a substring the git ref (branch or tag)
+#
+# https://github.com/briandfoy/github_actions
+# https://github.com/features/actions
+# https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions#onpushpull_requestbranchestags
+name: check-branch
+
+on:
+    push:
+        branches:
+            - '*'
+# To play with this, choose which OS you want to exclude. Suppose that's
+# macOS. Make a branch that starts with 'macos' after a / (so, macos at
+# the start or a topic branch like topic/macos). Commit and push.
+#
+# This is probably tricky, but conceivably you could make a branch like
+# ubuntu/macos/windows and all of these would trigger. That way you
+# can construct a branch that selects more than one job to run
+
+
+jobs:
+    mac-check-commit-message:
+        runs-on: macos-latest
+        if: "contains(github.ref, '/macos')"
+        steps:
+            - name: Just pass
+              run: true
+    ubuntu-check-commit-message:
+        runs-on: ubuntu-latest
+        if: "contains(github.ref, '/ubuntu')"
+        steps:
+            - name: Just pass
+              run: true
+    windows-check-commit-message:
+        runs-on: windows-latest
+        if: "contains(github.ref, '/windows')"
+        steps:
+            - name: Just pass
+              run: exit 0
