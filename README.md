@@ -1,5 +1,11 @@
 # JSON::Jsonnet
 
+[![CPAN version](https://badge.fury.io/pl/JSON-Jsonnet.svg)](https://metacpan.org/pod/JSON::Jsonnet)
+[![CPAN testers](https://cpantesters.org/distro/J/JSON-Jsonnet.svg)](https://cpantesters.org/distro/J/JSON-Jsonnet)
+[![License](https://img.shields.io/badge/license-Perl%205-blue.svg)](https://dev.perl.org/licenses/)
+[![Perl](https://img.shields.io/badge/perl-5.30%2B-blue.svg)](https://www.perl.org/)
+[![CI](https://github.com/YOURNAME/JSON-Jsonnet/actions/workflows/ci.yml/badge.svg)](https://github.com/YOURNAME/JSON-Jsonnet/actions/workflows/ci.yml)
+
 Perl XS bindings to **libjsonnet** (Google Jsonnet C/C++ API).
 
 This module provides a thin, low-level interface to the official Jsonnet VM.
