@@ -29,29 +29,32 @@ else {
 }
 
 WriteMakefile(
-    NAME             => 'Jsonnet::XS',
-    VERSION_FROM     => 'lib/Jsonnet/XS.pm',
-    ABSTRACT_FROM    => 'lib/Jsonnet/XS.pm',
-    AUTHOR           => 'Sergey Kovalev <info@neolite.ru>',
-    LICENSE          => 'perl_5',
+    NAME               => 'Jsonnet::XS',
+    VERSION_FROM       => 'lib/Jsonnet/XS.pm',
+    ABSTRACT_FROM      => 'lib/Jsonnet/XS.pm',
+    AUTHOR             => 'Sergey Kovalev <info@neolite.ru>',
+    LICENSE            => 'perl_5',
 
-    MIN_PERL_VERSION => '5.30.0',
+    MIN_PERL_VERSION   => '5.30.0',
 
-    LIBS             => [$libs],
-    INC              => $inc,
-    XS               => { 'Jsonnet.xs' => 'Jsonnet.c' },
+    LIBS               => [$libs],
+    INC                => $inc,
+    XS                 => { 'Jsonnet.xs' => 'Jsonnet.c' },
 
-    TYPEMAPS         => ['typemap'],
+    TYPEMAPS           => ['typemap'],
 
-    clean            => { FILES => 'Jsonnet.c Jsonnet.o cover_db MYMETA.*' },
+    clean              => { FILES => 'Jsonnet.c Jsonnet.o cover_db MYMETA.*' },
 
-    PREREQ_PM        => {
+    PREREQ_PM          => {
         'JSON::MaybeXS' => 0,
         'Test2::V0'     => 0,
     },
 
-    OBJECT           => '$(O_FILES)',
-    OPTIMIZE         => $DEBUG ? '-g' : '-O2',
+    OBJECT             => '$(O_FILES)',
+    OPTIMIZE           => $DEBUG ? '-g' : '-O2',
+    CONFIGURE_REQUIRES => {
+        'Devel::CheckLib' => 0,
+    },
 
     META_MERGE => {
         'meta-spec' => { version => 2 },  # CPAN Meta Spec v2 :contentReference[oaicite:1]{index=1}
