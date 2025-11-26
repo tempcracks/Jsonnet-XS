@@ -28,6 +28,19 @@ else {
     $libs = $pc_libs   if $pc_libs;
 }
 
+BEGIN {
+    eval { require Devel::CheckLib; 1 } or do {
+        warn "Devel::CheckLib is not installed; skipping pre-check for libjsonnet\n";
+    };
+}
+
+if (Devel::CheckLib->can('check_lib')) {
+    Devel::CheckLib::check_lib_or_exit(
+        lib => 'jsonnet',
+        header => 'libjsonnet.h',
+    );
+}
+
 WriteMakefile(
     NAME               => 'Jsonnet::XS',
     VERSION_FROM       => 'lib/Jsonnet/XS.pm',
@@ -53,7 +66,8 @@ WriteMakefile(
     OBJECT             => '$(O_FILES)',
     OPTIMIZE           => $DEBUG ? '-g' : '-O2',
     CONFIGURE_REQUIRES => {
-        'Devel::CheckLib' => 0,
+        'ExtUtils::MakeMaker' => 0,
+        'Devel::CheckLib'     => 0,
     },
 
     META_MERGE => {
