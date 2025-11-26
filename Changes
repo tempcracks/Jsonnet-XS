@@ -1,6 +1,11 @@
 Revision history for Perl extension JSON::Jsonnet.
 
-0.01  2025-11-21
+0.00_02  2025-11-26
+    - Fixed a bug with missing Makefile.PL in the
+      distribution
+    - Fixed version number in Changes
+
+0.00_01  2025-11-21
     - Initial CPAN release.
     - XS bindings to libjsonnet:
       evaluate_snippet/file, multi/stream outputs

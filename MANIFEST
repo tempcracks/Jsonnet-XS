@@ -1,6 +1,7 @@
 Changes
 Jsonnet.xs
 lib/JSON/Jsonnet.pm
+Makefile.PL
 MANIFEST
 MANIFEST.SKIP
 README

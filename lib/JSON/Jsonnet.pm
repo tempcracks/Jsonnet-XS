@@ -24,7 +24,7 @@ our @EXPORT = qw(
 
 );
 
-our $VERSION = '0.00_01';
+our $VERSION = '0.00_02';
 our $XS_VERSION = $VERSION;
 $VERSION = eval $VERSION;  # see L<perlmodstyle>
 
