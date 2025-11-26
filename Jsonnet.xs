@@ -319,7 +319,7 @@ perl_jsonnet_native_cb(void *vctx, const struct JsonnetJsonValue *const *argv, i
 
 /* ---------- XS bindings ---------- */
 
-MODULE = JSON::Jsonnet    PACKAGE = JSON::Jsonnet
+MODULE = Jsonnet::XS    PACKAGE = Jsonnet::XS
 PROTOTYPES: ENABLE
 
 PerlJsonnetVm *

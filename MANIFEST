@@ -1,6 +1,6 @@
 Changes
 Jsonnet.xs
-lib/JSON/Jsonnet.pm
+lib/Jsonnet/XS.pm
 Makefile.PL
 MANIFEST
 MANIFEST.SKIP
@@ -18,4 +18,6 @@ t/08-native-bad-args.t
 t/09-import-die.t
 t/10-new-branches.t
 t/11-string-output-true-branch.t
+t/90-pod.t
+t/91-pod-coverage.t
 typemap

@@ -1,7 +1,7 @@
 use Test2::V0;
-use JSON::Jsonnet;
+use Jsonnet::XS;
 
-my $vm = JSON::Jsonnet->new();
+my $vm = Jsonnet::XS->new();
 
 $vm->import_callback(sub {
     die "import boom from perl";

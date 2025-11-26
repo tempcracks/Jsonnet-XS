@@ -2,7 +2,7 @@ use Test2::V0;
 use JSON::MaybeXS qw(decode_json);
 use File::Temp qw(tempdir);
 use File::Spec;
-use JSON::Jsonnet;
+use Jsonnet::XS;
 
 my $dir = tempdir(CLEANUP => 1);
 my $libfile = File::Spec->catfile($dir, "lib.jsonnet");
@@ -10,7 +10,7 @@ open my $fh, ">", $libfile or die $!;
 print $fh '{ k: "v-from-jpath" }';
 close $fh;
 
-my $vm = JSON::Jsonnet->new( jpathdir => [$dir] );
+my $vm = Jsonnet::XS->new( jpathdir => [$dir] );
 
 my $txt = $vm->evaluate_snippet("use_jpath", q'
 local lib = import "lib.jsonnet";

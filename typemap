@@ -3,13 +3,13 @@ PerlJsonnetVm *  T_JSONNETVM
 
 INPUT
 T_JSONNETVM
-    if (sv_isobject($arg) && sv_derived_from($arg, \"JSON::Jsonnet\")) {
+    if (sv_isobject($arg) && sv_derived_from($arg, \"Jsonnet::XS\")) {
         $var = INT2PTR(PerlJsonnetVm *, SvIV(SvRV($arg)));
     }
     else {
-        croak(\"$var is not of type JSON::Jsonnet\");
+        croak(\"$var is not of type Jsonnet::XS\");
     }
 
 OUTPUT
 T_JSONNETVM
-    sv_setref_pv($arg, \"JSON::Jsonnet\", (void*)$var);
+    sv_setref_pv($arg, \"Jsonnet::XS\", (void*)$var);

@@ -1,7 +1,7 @@
 use Test2::V0;
-use JSON::Jsonnet;
+use Jsonnet::XS;
 
-my $vm = JSON::Jsonnet->new(
+my $vm = Jsonnet::XS->new(
     string_output => 1,   # ветка exists + true
 );
 

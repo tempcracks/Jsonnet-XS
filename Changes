@@ -1,4 +1,7 @@
-Revision history for Perl extension JSON::Jsonnet.
+Revision history for Perl extension Jsonnet::XS.
+
+0.00_03  2025-11-27
+    - Rename module from JSON::Jsonnet to Jsonnet::XS
 
 0.00_02  2025-11-26
     - Fixed a bug with missing Makefile.PL in the

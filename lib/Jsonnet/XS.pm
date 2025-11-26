@@ -1,4 +1,4 @@
-package JSON::Jsonnet;
+package Jsonnet::XS;
 
 use strict;
 use warnings;
@@ -11,7 +11,7 @@ our @ISA = qw(Exporter);
 # names by default without a very good reason. Use EXPORT_OK instead.
 # Do not simply export all your public functions/methods/constants.
 
-# This allows declaration	use JSON::Jsonnet ':all';
+# This allows declaration	use Jsonnet::XS ':all';
 # If you do not need this, moving things directly into @EXPORT or @EXPORT_OK
 # will save memory.
 our %EXPORT_TAGS = ( 'all' => [ qw(
@@ -24,7 +24,7 @@ our @EXPORT = qw(
 
 );
 
-our $VERSION = '0.00_02';
+our $VERSION = '0.00_03';
 our $XS_VERSION = $VERSION;
 $VERSION = eval $VERSION;  # see L<perlmodstyle>
 
@@ -73,13 +73,13 @@ sub new {
 
 =head1 NAME
 
-JSON::Jsonnet - XS bindings to libjsonnet (C++ Jsonnet)
+Jsonnet::XS - XS bindings to libjsonnet (C++ Jsonnet)
 
 =head1 SYNOPSIS
 
-  use JSON::Jsonnet;
+  use Jsonnet::XS;
 
-  my $vm = JSON::Jsonnet->new(
+  my $vm = Jsonnet::XS->new(
       jpathdir => ["./libsonnet"],
       ext_vars => { ENV => "prod" },
       tla_vars => { env => "prod" },

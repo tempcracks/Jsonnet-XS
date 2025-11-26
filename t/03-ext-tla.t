@@ -1,8 +1,8 @@
 use Test2::V0;
 use JSON::MaybeXS qw(decode_json);
-use JSON::Jsonnet;
+use Jsonnet::XS;
 
-my $vm = JSON::Jsonnet->new(
+my $vm = Jsonnet::XS->new(
     ext_vars   => { foo => "bar" },
     ext_codes  => { num => "1+2" },
     tla_vars   => { env => "prod" },

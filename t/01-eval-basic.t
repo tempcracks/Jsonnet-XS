@@ -1,9 +1,9 @@
 use Test2::V0;
 use JSON::MaybeXS qw(decode_json);
 use File::Temp qw(tempfile);
-use JSON::Jsonnet;
+use Jsonnet::XS;
 
-my $vm = JSON::Jsonnet->new();
+my $vm = Jsonnet::XS->new();
 
 # snippet
 my $json_text = $vm->evaluate_snippet("snippet", '{ x: 1 + 2 }');

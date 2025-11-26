@@ -1,7 +1,7 @@
 use Test2::V0;
-use JSON::Jsonnet;
+use Jsonnet::XS;
 
-my $vm = JSON::Jsonnet->new();
+my $vm = Jsonnet::XS->new();
 
 ok lives { $vm->max_stack(1000) },           "max_stack";
 ok lives { $vm->gc_min_objects(10) },       "gc_min_objects";

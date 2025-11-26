@@ -2,7 +2,7 @@ use Test2::V0;
 use JSON::MaybeXS;
 use File::Temp qw(tempdir);
 use File::Spec;
-use JSON::Jsonnet;
+use Jsonnet::XS;
 
 my $dir = tempdir(CLEANUP => 1);
 
@@ -15,7 +15,7 @@ close $fh;
 my $J = JSON::MaybeXS->new(allow_nonref => 1);
 
 # ---------- VM1: ветки jpathdir-скаляр + string_output + числовые опции ----------
-my $vm1 = JSON::Jsonnet->new(
+my $vm1 = Jsonnet::XS->new(
     max_stack          => 1000,
     gc_min_objects     => 5,
     gc_growth_trigger  => 2.1,
@@ -40,7 +40,7 @@ local lib = import "lib.jsonnet";
 is $J->decode($j), { x => "from-jpath-scalar" }, "jpathdir scalar branch works";
 
 # ---------- VM2: ветки import_callback + native_callbacks через new ----------
-my $vm2 = JSON::Jsonnet->new(
+my $vm2 = Jsonnet::XS->new(
     import_callback    => sub {
         my ($base, $rel) = @_;
         return ("virtual.jsonnet", '{ z: 7 }') if $rel eq "virtual.jsonnet";

@@ -1,9 +1,9 @@
 use Test2::V0;
 use JSON::MaybeXS;
 use File::Temp qw(tempfile);
-use JSON::Jsonnet;
+use Jsonnet::XS;
 
-my $vm = JSON::Jsonnet->new();
+my $vm = Jsonnet::XS->new();
 my $J  = JSON::MaybeXS->new(allow_nonref => 1);
 
 # multi from snippet
