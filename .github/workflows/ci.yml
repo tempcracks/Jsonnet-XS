@@ -57,10 +57,6 @@ jobs:
               Test::Pod::Coverage \
               Test::CPAN::Meta
 
-      - name: Install Perl dependencies
-        run: |
-          cpanm --notest --installdeps .
-
       - name: Build
         run: |
           perl Makefile.PL
