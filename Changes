@@ -1,5 +1,9 @@
 Revision history for Perl extension Jsonnet::XS.
 
+0.00_04  2025-11-27
+    - Improve libjsonnet detection (using Devel::CheckLib)
+	  for CPAN Testers
+
 0.00_03  2025-11-27
     - Rename module from JSON::Jsonnet to Jsonnet::XS
 
