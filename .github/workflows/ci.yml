@@ -36,11 +36,16 @@ jobs:
 
       - name: Install configure deps
         run: |
-          cpanm --notest Devel::CheckLib
+          cpanm --notest Devel::CheckLib \
+                     JSON::MaybeXS \
+                     Test2::V0 \
+                     Test::Pod \
+                     Test::Pod::Coverage \
+                     Test::CPAN::Meta
 
-      - name: Install Perl dependencies
-        run: |
-          cpanm --notest --installdeps .
+      #- name: Install Perl dependencies
+      #  run: |
+      #    cpanm --notest --installdeps .
 
       - name: Build
         run: |
