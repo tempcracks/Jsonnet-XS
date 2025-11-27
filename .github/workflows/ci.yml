@@ -31,21 +31,29 @@ jobs:
           sudo apt-get install -y \
             build-essential \
             pkg-config \
-            jsonnet \
-            libjsonnet-dev
+            git
+          
+      # НЕ ставим libjsonnet-dev из apt (там 0.20.0)
+      # - name: Install system dependencies (old jsonnet)
+      #   run: sudo apt-get install -y jsonnet libjsonnet-dev
+
+      - name: Build & install libjsonnet v0.21.0
+        run: |
+          JSONNET_TAG=v0.21.0
+          git clone --depth 1 --branch "$JSONNET_TAG" https://github.com/google/jsonnet.git
+          cd jsonnet
+          make -j"$(nproc)"
+          sudo make install
+          # Чтобы рантайм точно увидел /usr/local/lib
+          sudo ldconfig
 
       - name: Install configure deps
         run: |
-          cpanm --notest Devel::CheckLib \
-                     JSON::MaybeXS \
-                     Test2::V0 \
-                     Test::Pod \
-                     Test::Pod::Coverage \
-                     Test::CPAN::Meta
+          cpanm --notest Devel::CheckLib
 
-      #- name: Install Perl dependencies
-      #  run: |
-      #    cpanm --notest --installdeps .
+      - name: Install Perl dependencies
+        run: |
+          cpanm --notest --installdeps .
 
       - name: Build
         run: |
