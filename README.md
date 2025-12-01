@@ -5,7 +5,7 @@
 [![License](https://img.shields.io/badge/license-Perl%205-blue.svg)](https://dev.perl.org/licenses/)
 [![Perl](https://img.shields.io/badge/perl-5.30%2B-blue.svg)](https://www.perl.org/)
 [![CI](https://github.com/neo1ite/Jsonnet-XS/actions/workflows/ci.yml/badge.svg)](https://github.com/neo1ite/Jsonnet-XS/actions/workflows/ci.yml)
-[![ZH](https://img.shields.io/badge/Language-Chinese.svg)](https://github.com/tempcracks/Jsonnet-XS/doc/README.ZH.MD)
+[![ZH](https://img.shields.io/badge/Language-Chinese.svg)](https://github.com/tempcracks/Jsonnet-XS/doc/README.zh.MD)
 
 Perl XS bindings to **libjsonnet** (Google Jsonnet C/C++ API).
 
