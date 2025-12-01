@@ -65,6 +65,31 @@ sudo ldconfig   # on Linux
 ---
 
 ## Installation
+Before need install `cpanm`
+### Debian / Ubuntu
+
+```bash
+sudo apt install cpanm
+````
+
+### Fedora
+
+```bash
+sudo dnf install cpanm
+```
+
+### Arch
+
+```bash
+sudo pacman -S cpanm
+```
+
+### macOS (Homebrew)
+
+```bash
+brew install cpanm
+```
+---
 
 ### Standard CPAN install
 
