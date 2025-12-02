@@ -22,7 +22,7 @@ my %CHECKLIB_ARGS;
 if ($prefix) {
     # Explicit prefix
     $inc_flags = "-I$prefix/include";
-    $lib_flags = "-L$prefix/lib $lib_flags";
+    $lib_flags = "-L$prefix $lib_flags";
 
     %CHECKLIB_ARGS = (
         header => 'libjsonnet.h',
@@ -94,7 +94,7 @@ my $have_required_version = check_lib(
 END_JSONNET_VERSION_CHECK
 );
 
-unless ($have_required_version) {
+unless ($have_required_version != 1) {
     warn <<"END_MSG";
 *** Jsonnet::XS: found libjsonnet, but its version is too old.
 *** Required libjsonnet version: >= $JSONNET_MIN_VERSION
