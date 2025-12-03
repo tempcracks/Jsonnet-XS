@@ -34,9 +34,6 @@ jobs:
         run: |
           cpan -M https://www.cpan.org -T App::cpanminus
           cpanm --notest  ${{ vars.EXTRA_CPANM_MODULES }} ${{ vars.MACOS_EXTRA_CPANM_MODULES }}
-      - name: Install dependencies
-        run: |
-          cpan -M https://www.cpan.org -T .
       # НЕ ставим libjsonnet-dev из apt (там 0.20.0)
       # - name: Install system dependencies (old jsonnet)
       #   run: sudo apt-get install -y jsonnet libjsonnet-dev
