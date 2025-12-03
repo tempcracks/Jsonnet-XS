@@ -1,0 +1,73 @@
+name: macos
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  macos:
+    runs-on: macos-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        perl: ['5.30', '5.32', '5.34', '5.36', '5.38', '5.40', '5.42']
+
+    name: Perl ${{ matrix.perl }} on MacOS
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Platform check
+              run:|
+                uname -a
+      - name: Set up Perl
+        uses: shogo82148/actions-setup-perl@v1
+        with:
+          perl-version: ${{ matrix.perl }}
+          enable-modules-cache: false   # можно true, если добавишь cpanfile
+      - name: Perl version check
+              run:|
+                perl -V
+      
+      - name: Prepare cpan
+              run:|
+                openssl version
+                cpan -M https://www.cpan.org -T App::cpanminus
+                cpanm --notest  ${{ vars.EXTRA_CPANM_MODULES }} ${{ vars.MACOS_EXTRA_CPANM_MODULES }}
+      - name: Install dependencies
+              run:|
+                cpan -M https://www.cpan.org -T .
+      # НЕ ставим libjsonnet-dev из apt (там 0.20.0)
+      # - name: Install system dependencies (old jsonnet)
+      #   run: sudo apt-get install -y jsonnet libjsonnet-dev
+
+      - name: Build & install libjsonnet v0.21.0
+        run: |
+          set -e
+          JSONNET_TAG=v0.21.0
+          cd /tmp
+          git clone --depth 1 --branch "$JSONNET_TAG" https://github.com/google/jsonnet.git
+          cd jsonnet
+          make -j"$(nproc)"
+          sudo make install
+          sudo ldconfig
+
+      - name: Install configure deps
+        run: |
+          cpanm --notest \
+              Devel::CheckLib \
+              JSON::MaybeXS \
+              Test2::V0 \
+              Test::Pod \
+              Test::Pod::Coverage \
+              Test::CPAN::Meta
+
+      - name: Build
+        run: |
+          perl Makefile.PL
+          make
+
+      - name: Run tests
+        run: |
+          make test
