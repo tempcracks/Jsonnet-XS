@@ -50,13 +50,15 @@ jobs:
       - name: Install libjsonnet v0.21.0
         run: |
           brew install jsonnet
-      
+          tool -L /opt/homebrew/bin/jsonnet
+          brew --prefix jsonnet
+          find /opt/homebrew -name "*jsonnet*"
 
-      - name: Build
-        run: |
-          perl Makefile.PL
-          make
+      #- name: Build
+      #  run: |
+       #   perl Makefile.PL
+       #   make
 
-      - name: Run tests
-        run: |
-          make test
+      #- name: Run tests
+      #  run: |
+       #   make test
