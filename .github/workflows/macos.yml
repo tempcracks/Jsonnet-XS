@@ -49,10 +49,13 @@ jobs:
               
       - name: Install libjsonnet v0.21.0
         run: |
+          brew update --verbose
+          brew update-reset
+          brew cleanup
           brew install jsonnet
           ls -la /opt/homebrew/Cellar/jsonnet/0.21.0/
-          find /opt/ -name "*jsonnet*.h" -o -name "*jsonnet*.dylib"
-
+          find /opt -name "*jsonnet*.h"
+          ls -ls /opt/homebrew/include/jsonnet.h
 
 
       #- name: Build
