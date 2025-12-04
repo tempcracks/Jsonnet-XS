@@ -52,7 +52,8 @@ jobs:
           brew update
           brew update-reset
           brew cleanup
-          
+          brew upgrade cmake
+          cmake --version
           set -e
           JSONNET_TAG=v0.21.0
           cd /tmp
