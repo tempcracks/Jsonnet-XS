@@ -65,7 +65,7 @@ jobs:
           head -n2 CMakeLists.txt
           mkdir build
           cd build
-          cmake ..
+          cmake -DCMAKE_POLICY_VERSION_MINIMUM=3.5  ..
           ls -la /tmp/jsonnet/build/
 
       #- name: Build
