@@ -60,8 +60,8 @@ jobs:
           git clone --depth 1 --branch "$JSONNET_TAG" https://github.com/google/jsonnet.git
           cd jsonnet
           ls -la /tmp/jsonnet/
-          sed 's/cmake_minimum_required(VERSION 2.8\.7\.\.\.4\.0)/cmake_minimum_required(VERSION 3.5)/' CMakeLists.txt
-          sed 's/cmake_minimum_required(VERSION 2.8\.7\.\.\.4\.0)/cmake_minimum_required(VERSION 3.5)/' CMakeLists.txt.in
+          perl -i -pe's/cmake_minimum_required(VERSION 2.8\.7\.\.\.4\.0)/cmake_minimum_required(VERSION 3.5)/' CMakeLists.txt
+          perl -i -pe's/cmake_minimum_required(VERSION 2.8\.7\.\.\.4\.0)/cmake_minimum_required(VERSION 3.5)/' CMakeLists.txt.in
           head -n1 CMakeLists.txt
 
 
