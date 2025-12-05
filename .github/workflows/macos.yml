@@ -66,15 +66,15 @@ jobs:
           #cat /tmp/jsonnet/build/Makefile
           cd /tmp/jsonnet/build
           sudo make
-          make install
+          sudo make install
           ls -la .
-      - name: output cmake
-        run: |
-          cd /tmp/jsonnet/build
-          #cat /tmp/jsonnet/build/cmake_install.cmake
-          cmake .
-          cmake install
-          ls -la /tmp/jsonnet/build/*
+      #- name: output cmake
+      #  run: |
+      #    cd /tmp/jsonnet/build
+       #   #cat /tmp/jsonnet/build/cmake_install.cmake
+      #    cmake .
+      #    cmake install
+      #    ls -la /tmp/jsonnet/build/*
 
           
 
