@@ -78,11 +78,11 @@ jobs:
 
           
 
-      #- name: Build
-      #  run: |
-       #   perl Makefile.PL
-       #   make
+      - name: Build
+        run: |
+          perl Makefile.PL
+          make
 
-      #- name: Run tests
-      #  run: |
-       #   make test
+      - name: Run tests
+        run: |
+          make test
