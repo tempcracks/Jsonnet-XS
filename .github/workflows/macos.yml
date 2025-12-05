@@ -68,18 +68,12 @@ jobs:
           sudo make
           sudo make install
           ls -la .
-      #- name: output cmake
-      #  run: |
-      #    cd /tmp/jsonnet/build
-       #   #cat /tmp/jsonnet/build/cmake_install.cmake
-      #    cmake .
-      #    cmake install
-      #    ls -la /tmp/jsonnet/build/*
 
           
 
       - name: Build
         run: |
+          export DYLD_LIBRARY_PATH="/usr/local/lib:$DYLD_LIBRARY_PATH"
           perl Makefile.PL
           make
 
