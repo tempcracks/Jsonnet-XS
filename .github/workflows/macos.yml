@@ -57,12 +57,10 @@ jobs:
           cd /tmp
           git clone  https://github.com/tempcracks/jsonnet.git
           cd jsonnet
-          head -n2 CMakeLists.txt
-          mkdir build
-          cd build
-          cmake  ..
-          sudo find / -name "jsonnet.dylib"
-          sudo find / -name "libjsonnet.dylib"
+          make
+          ls -la
+          sudo find /tmp/jsonnet -name "jsonnet.dylib"
+          sudo find /tmp/jsonnet -name "libjsonnet.dylib"
           ls -la /tmp/jsonnet/build/
 
       #- name: Build
