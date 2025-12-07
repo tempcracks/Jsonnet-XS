@@ -122,6 +122,9 @@ WriteMakefile(
 
     LIBS               => [ $lib_flags ],
     INC                => $inc_flags,
+	($^O eq 'darwin' ? (dynamic_lib => {
+        OTHERLDFLAGS => '-Wl,-rpath,/usr/local/lib'
+    }) : ()),
     XS                 => { 'Jsonnet.xs' => 'Jsonnet.c' },
 
     TYPEMAPS           => [ 'typemap' ],
