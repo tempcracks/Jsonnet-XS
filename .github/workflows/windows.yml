@@ -61,8 +61,6 @@ jobs:
             # Refresh PATH for MSBuild
             #$env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
             $env:Path = "C:\tools\mingw64\bin;$env:Path"
-            $env:Path = "C:\msys64;$env:Path"
-            $env:Path = "C:\msys64\usr\bin;$env:Path"
         - name: Build Jsonnet
           run: |
             cd $env:SOURCE_DIR
