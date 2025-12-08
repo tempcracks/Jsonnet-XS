@@ -61,7 +61,8 @@ jobs:
         
             if ($LASTEXITCODE -eq 0) {
               Write-Host "Found $cmakeVersion in winget, installing..." -ForegroundColor Green
-              winget install --id Kitware.CMake --version $cmakeVersion --exact --silent --accept-package-agreements
+              winget install --id Kitware.CMake --version $cmakeVersion --exact --silent --accept-package-agreements --accept-source-agreements
+              
             } else {
               Write-Host "CMake $cmakeVersion not in winget, downloading from URL..." -ForegroundColor Yellow
             
