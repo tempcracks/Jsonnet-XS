@@ -15,10 +15,7 @@ jobs:
       steps:
         - run: git config --global core.autocrlf false
         - uses: actions/checkout@v5
-        - name: Install CMake 4.0+
-          uses: lukka/get-cmake@latest
-          with:
-            cmakeVersion: '4.0.0'
+
         - name: git corrections
           run: |
             git config --global --add safe.directory "${{ github.workspace }}"  
@@ -55,7 +52,15 @@ jobs:
             $sourceDir = "$extractDir\jsonnet-$version"
             echo "SOURCE_DIR=$sourceDir" >> $env:GITHUB_ENV
     
-        
+        - name: Install cmake
+          shell: powershell
+          run: |
+            $url = "https://github.com/Kitware/CMake/archive/refs/tags/v4.2.1.zip"
+            $zip = "$env:TEMP\cmake.zip"
+            Invoke-WebRequest -Uri $url -OutFile $zip -UseBasicParsing
+            Expand-Archive -Path $zip -DestinationPath "$env:ProgramFiles\CMake"
+            echo "$env:ProgramFiles\CMake\cmake-4.2.1-windows-x86_64\bin" | Out-File -FilePath $env:GITHUB_PATH -Append
+            
         - name: Build Jsonnet
           run: |
             cd $env:SOURCE_DIR
