@@ -15,7 +15,10 @@ jobs:
       steps:
         - run: git config --global core.autocrlf false
         - uses: actions/checkout@v5
-
+        - name: Install CMake 4.0+
+        - uses: lukka/get-cmake@latest
+          with:
+            cmakeVersion: '4.0.0'
         - name: git corrections
           run: |
             git config --global --add safe.directory "${{ github.workspace }}"  
@@ -52,19 +55,7 @@ jobs:
             $sourceDir = "$extractDir\jsonnet-$version"
             echo "SOURCE_DIR=$sourceDir" >> $env:GITHUB_ENV
     
-        - name: Install build tools
-          run: |
-            # Install C++ build tools
-            #choco upgrade -y cmake visualstudio2022buildtools make mingw 
-            winget search CMake
-
-            winget upgrade CMake.CMake
-
-            #winget install --id Kitware.CMake -e --source winget
-                        
-            # Refresh PATH for MSBuild
-            #$env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
-            $env:Path = "C:\tools\mingw64\bin;$env:Path"
+        
         - name: Build Jsonnet
           run: |
             cd $env:SOURCE_DIR
