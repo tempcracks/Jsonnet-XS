@@ -30,8 +30,8 @@ jobs:
             echo "C:\strawberry\perl\site\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
             echo "C:\strawberry\perl\bin"      | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
         - name: Perl version
-            run:|
-              perl -V
+          run: |
+            perl -V
 
         - name: Install cpanm and multiple modules
           run: |
