@@ -55,8 +55,7 @@ jobs:
         - name: Install build tools
           run: |
             # Install C++ build tools
-            choco install -y cmake visualstudio2022buildtools
-            #make mingw msys2
+            choco install -y cmake visualstudio2022buildtools make mingw msys2
 
             
             # Refresh PATH for MSBuild
