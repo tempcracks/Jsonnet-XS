@@ -40,9 +40,9 @@ jobs:
               
         - name: Install jsonnet
           run: |
-            $version = "0.21.0"
+            $version = "master"
             $url = "https://github.com/tempcracks/jsonnet/archive/refs/heads/master.zip"
-            $zipPath = "$env:RUNNER_TEMP\jsonnet-$version.zip"
+            $zipPath = "$env:RUNNER_TEMP\$version.zip"
             $extractDir = "$env:RUNNER_TEMP\jsonnet-src"
         
             # Download source
