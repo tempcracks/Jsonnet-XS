@@ -36,12 +36,8 @@ jobs:
         - name: Install cpanm and multiple modules
           run: |
               cpan -M http://www.cpan.org -T App::cpanminus ${{ vars.EXTRA_CPAN_MODULES }}
-              cpanm --notest Devel::CheckLib `
-              JSON::MaybeXS `
-              Test2::V0 `
-              Test::Pod `
-              Test::Pod::Coverage `
-              Test::CPAN::Meta
+              cpanm --notest Devel::CheckLib JSON::MaybeXS Test2::V0 Test::Pod Test::Pod::Coverage Test::CPAN::Meta
+              
         - name: Install jsonnet
           run: |
               choco install jsonnet
