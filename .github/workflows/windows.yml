@@ -61,8 +61,8 @@ jobs:
             choco install -y cmake visualstudio2022buildtools make mingw
         
             # Refresh PATH for MSBuild
-            $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
-    
+            #$env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
+            $env:Path = "C:\tools\mingw64\bin;$env:Path"
         - name: Build Jsonnet
           run: |
             cd $env:SOURCE_DIR
