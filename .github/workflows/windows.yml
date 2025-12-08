@@ -40,7 +40,9 @@ jobs:
               
         - name: Install jsonnet
           run: |
-              choco install jsonnet
+              choco feature enable -n=useEnhancedExitCodes
+              choco config set commandExecutionTimeoutSeconds 3600
+              choco install jsonnet -y --no-progress --timeout 3600
 
         - name: Install dependencies
           run: |
