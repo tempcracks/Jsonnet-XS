@@ -4,7 +4,7 @@ on:
   push:
   pull_request:
 
-  jobs:
+jobs:
     perl:
       environment: automated_testing
       runs-on: ${{ matrix.os }}
@@ -21,7 +21,7 @@ on:
 
         - name: git corrections
           run: |
-            git config --global --add safe.directory "%cd%"
+            git config --global --add safe.directory "${{ github.workspace }}"  
         - name: Set up Perl
           run: |
             choco uninstall strawberryperl
@@ -29,11 +29,12 @@ on:
             echo "C:\strawberry\c\bin"  | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
             echo "C:\strawberry\perl\site\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
             echo "C:\strawberry\perl\bin"      | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
-          - name: Perl version
-            run: perl -V
+        - name: Perl version
+            run:|
+              perl -V
 
-          - name: Install cpanm and multiple modules
-            run: |
+        - name: Install cpanm and multiple modules
+          run: |
               cpan -M http://www.cpan.org -T App::cpanminus ${{ vars.EXTRA_CPAN_MODULES }}
               cpanm --notest Devel::CheckLib \
               JSON::MaybeXS \
@@ -41,18 +42,18 @@ on:
               Test::Pod \
               Test::Pod::Coverage \
               Test::CPAN::Meta
-          - name: Install jsonnet
-            run: |
+        - name: Install jsonnet
+          run: |
               choco install jsonnet
 
-          - name: Install dependencies
-            run: |
+        - name: Install dependencies
+          run: |
               cpan -M https://www.cpan.org -T .
-          - name: Build
-            run: |
+        - name: Build
+          run: |
               perl Makefile.PL
               make
-          - name: Run tests
-            run: |
+        - name: Run tests
+          run: |
               make test
 
