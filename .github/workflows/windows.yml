@@ -16,7 +16,7 @@ jobs:
         - run: git config --global core.autocrlf false
         - uses: actions/checkout@v5
         - name: Install CMake 4.0+
-        - uses: lukka/get-cmake@latest
+          uses: lukka/get-cmake@latest
           with:
             cmakeVersion: '4.0.0'
         - name: git corrections
