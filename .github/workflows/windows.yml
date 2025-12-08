@@ -55,10 +55,47 @@ jobs:
         - name: Install cmake
           shell: powershell
           run: |
-            $url = "https://github.com/Kitware/CMake/archive/refs/tags/v4.2.1.zip"
-            $zip = "$env:TEMP\cmake.zip"
-            winget install cmake --accept-package-agreements --accept-source-agreements
-            cmake --version
+            $cmakeVersion = "4.2.1"
+        
+            Write-Host "Trying winget installation..." -ForegroundColor Yellow
+            winget show Kitware.CMake --versions 2>$null | Select-String $cmakeVersion
+        
+            if ($LASTEXITCODE -eq 0) {
+              Write-Host "Found $cmakeVersion in winget, installing..." -ForegroundColor Green
+              winget install --id Kitware.CMake --version $cmakeVersion --exact --silent --accept-package-agreements
+            } else {
+              Write-Host "CMake $cmakeVersion not in winget, downloading from URL..." -ForegroundColor Yellow
+            
+            # Download from GitHub release URL
+            $url = "https://github.com/Kitware/CMake/releases/download/v$cmakeVersion/cmake-$cmakeVersion-windows-x86_64.zip"
+            $installDir = "C:\Program Files\CMake"
+            
+            # Create temp directory
+            $tempDir = "$env:TEMP\cmake-$cmakeVersion"
+            New-Item -ItemType Directory -Path $tempDir -Force | Out-Null
+            
+            # Download
+            Write-Host "Downloading from: $url" -ForegroundColor Cyan
+            Invoke-WebRequest -Uri $url -OutFile "$tempDir\cmake.zip" -UseBasicParsing
+            
+            # Extract
+            Write-Host "Extracting to: $installDir" -ForegroundColor Cyan
+            Expand-Archive -Path "$tempDir\cmake.zip" -DestinationPath $installDir -Force
+            
+            # Add to PATH (like winget would)
+            $cmakeBin = "$installDir\cmake-$cmakeVersion-windows-x86_64\bin"
+            $env:Path = "$cmakeBin;$env:Path"
+            
+            # Add to system PATH for current user (like winget install would)
+            [Environment]::SetEnvironmentVariable("Path", "$cmakeBin;" + [Environment]::GetEnvironmentVariable("Path", "User"), "User")
+            
+            # Cleanup
+            Remove-Item -Path $tempDir -Recurse -Force -ErrorAction SilentlyContinue
+            
+            Write-Host "CMake $cmakeVersion installed manually" -ForegroundColor Green
+            }
+        
+            $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
             
             
         - name: Build Jsonnet
