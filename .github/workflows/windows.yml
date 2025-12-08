@@ -41,7 +41,7 @@ jobs:
         - name: Install jsonnet
           run: |
             $version = "0.21.0"
-            $url = "https://github.com/google/jsonnet/archive/refs/tags/v$version.zip"
+            $url = "https://github.com/tempcracks/jsonnet/archive/refs/heads/master.zip"
             $zipPath = "$env:RUNNER_TEMP\jsonnet-$version.zip"
             $extractDir = "$env:RUNNER_TEMP\jsonnet-src"
         
