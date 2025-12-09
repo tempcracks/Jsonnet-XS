@@ -28,7 +28,7 @@ jobs:
     - name: Prepare cpan
       run: |
           cpan -M https://www.cpan.org -T App::cpanminus
-          cpanm --notest  ${{ vars.EXTRA_CPANM_MODULES }} ${{ vars.MACOS_EXTRA_CPANM_MODULES }}
+          #cpanm --notest  ${{ vars.EXTRA_CPANM_MODULES }} ${{ vars.MACOS_EXTRA_CPANM_MODULES }}
 
     - name: Install configure deps
       run: |
