@@ -32,13 +32,7 @@ jobs:
 
     - name: Install configure deps
       run: |
-          cpanm --notest \
-              Devel::CheckLib \
-              JSON::MaybeXS \
-              Test2::V0 \
-              Test::Pod \
-              Test::Pod::Coverage \
-              Test::CPAN::Meta
+          cpanm Devel::CheckLib JSON::MaybeXS Test2::V0 Test::Pod Test::Pod::Coverage Test::CPAN::Meta
               
     - name: Install libjsonnet v0.21.0
       run: |
