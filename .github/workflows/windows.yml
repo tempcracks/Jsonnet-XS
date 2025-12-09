@@ -43,6 +43,7 @@ jobs:
             scoop bucket add main
             scoop bucket add extras
             scoop bucket add versions
+            $scoopPath = "$env:USERPROFILE\scoop\shims"
         
         - name: Install cmake
           shell: powershell
