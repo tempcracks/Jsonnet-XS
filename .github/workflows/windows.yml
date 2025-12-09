@@ -64,8 +64,8 @@ jobs:
             ls
             cmake --version
             ls
-            cmake .. -DCMAKE_BUILD_TYPE=Release 
-            cmake --build . --config Release
+            cmake .. 
+            cmake --build . 
             Move-Item .\Release\jsonnet.exe C:\Windows\System32\
 
         #- name: Install dependencies
