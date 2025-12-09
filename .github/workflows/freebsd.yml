@@ -27,12 +27,12 @@ jobs:
       
     - name: Prepare cpan
       run: |
-          cpan -M https://www.cpan.org -T App::cpanminus
+          pkg install -y perl5 p5-App-cpanminus curl ca_root_nss
           #cpanm --notest  ${{ vars.EXTRA_CPANM_MODULES }} ${{ vars.MACOS_EXTRA_CPANM_MODULES }}
 
     - name: Install configure deps
       run: |
-          cpan -M https://www.cpan.org -T Devel::CheckLib JSON::MaybeXS Test2::V0 Test::Pod Test::Pod::Coverage Test::CPAN::Meta
+          cpanm --notest Devel::CheckLib JSON::MaybeXS Test2::V0 Test::Pod Test::Pod::Coverage Test::CPAN::Meta
               
     - name: Install libjsonnet v0.21.0
       run: |
@@ -40,12 +40,8 @@ jobs:
           pkg upgrade
           pkg install cmake 
           cmake --version
-          cd /tmp
-          git clone  https://github.com/tempcracks/jsonnet.git
-          cd jsonnet
-          mkdir build
-          cd build
-          cmake ..
+          pkg install jsonnet
+          jsonnet --version
     - name: output makefile
       run: |
           #cat /tmp/jsonnet/build/Makefile
