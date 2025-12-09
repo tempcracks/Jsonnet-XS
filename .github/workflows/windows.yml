@@ -55,73 +55,17 @@ jobs:
         - name: Install cmake
           shell: powershell
           run: |
-            $cmakeVersion = "4.2.1"
-        
-        
-            if ($LASTEXITCODE -eq 0) {
-              Write-Host "Found $cmakeVersion in winget, installing..." -ForegroundColor Green
-              winget install --id Kitware.CMake --version $cmakeVersion --exact --silent --accept-package-agreements --accept-source-agreements
-              
-            } else {
-              Write-Host "CMake $cmakeVersion not in winget, downloading from URL..." -ForegroundColor Yellow
-            
-            # Download from GitHub release URL
-            $url = "https://github.com/Kitware/CMake/releases/download/v$cmakeVersion/cmake-$cmakeVersion-windows-x86_64.zip"
-            $installDir = "C:\Program Files\CMake"
-            
-            # Create temp directory
-            $tempDir = "$env:TEMP\cmake-$cmakeVersion"
-            New-Item -ItemType Directory -Path $tempDir -Force | Out-Null
-            
-            # Download
-            Write-Host "Downloading from: $url" -ForegroundColor Cyan
-            Invoke-WebRequest -Uri $url -OutFile "$tempDir\cmake.zip" -UseBasicParsing
-            
-            # Extract
-            Write-Host "Extracting to: $installDir" -ForegroundColor Cyan
-            Expand-Archive -Path "$tempDir\cmake.zip" -DestinationPath $installDir -Force
-            
-            # Add to PATH (like winget would)
-            $cmakeBin = "$installDir\cmake-$cmakeVersion-windows-x86_64\bin"
-            $env:Path = "$cmakeBin;$env:Path"
-            
-            # Add to system PATH for current user (like winget install would)
-            [Environment]::SetEnvironmentVariable("Path", "$cmakeBin;" + [Environment]::GetEnvironmentVariable("Path", "User"), "User")
-            
-            # Cleanup
-            Remove-Item -Path $tempDir -Recurse -Force -ErrorAction SilentlyContinue
-            
-            Write-Host "CMake $cmakeVersion installed manually" -ForegroundColor Green
-            }
-            $cmakeBin = "C:\Program Files\CMake\cmake-$cmakeVersion-windows-x86_64\bin"
-            $env:Path = "$cmakeBin;$env:Path"
+            scoop install cmake
             
             
-        - name: Build Jsonnet
+        - name: Install Jsonnet via Chocolatey
           shell: powershell
           run: |
-            cd $env:SOURCE_DIR
+            choco install jsonnet -y --no-progress
         
-            # Create build directory
-            mkdir build
-            cd build
-        
-            # Configure with CMake
-            cmake .. -DCMAKE_BUILD_TYPE=Release
-        
-            # Build
-            cmake --build . --config Release --target jsonnet
-        
-            # Verify
-            .\Release\jsonnet.exe --version
-        
-            # Copy to location in PATH
-            $installDir = "C:\jsonnet"
-            New-Item -ItemType Directory -Force -Path $installDir
-            Copy-Item .\Release\jsonnet.exe $installDir\
-        
-            # Add to PATH
-            echo $installDir >> $env:GITHUB_PATH
+        - name: Verify installation
+          run: |
+            jsonnet --version
 
         - name: Install dependencies
           run: |
