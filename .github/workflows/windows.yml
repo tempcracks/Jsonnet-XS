@@ -60,9 +60,10 @@ jobs:
             ls
             mkdir build
             cd build
+            ls
             cmake --version
             ls
-            cmake .. -DCMAKE_BUILD_TYPE=Release -G "Visual Studio 17 2022" -A x64
+            cmake .. -DCMAKE_BUILD_TYPE=Release 
             cmake --build . --config Release
             Move-Item .\Release\jsonnet.exe C:\Windows\System32\
 
