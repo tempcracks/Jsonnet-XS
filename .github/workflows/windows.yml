@@ -52,12 +52,14 @@ jobs:
             choco install visualstudio2022buildtools -y
             
         - name: Compile Jsonnet
+          shell: powershell
           run: |
             curl -L -o jsonnet-src.zip https://github.com/tempcracks/Jsonnet-XS/archive/refs/heads/main.zip
-            Expand-Archive jsonnet-src.zip -DestinationPath .
-            cd jsonnet-0.21.0
-            mkdir build
-            cd build
+            #Expand-Archive jsonnet-src.zip -DestinationPath .
+            ls 
+            #cd jsonnet-0.21.0
+            #mkdir build
+            #cd build
             cmake --version
             #cmake .. -DCMAKE_BUILD_TYPE=Release -G "Visual Studio 17 2022" -A x64
             #cmake --build . --config Release
