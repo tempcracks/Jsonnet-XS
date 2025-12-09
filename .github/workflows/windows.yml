@@ -45,16 +45,13 @@ jobs:
             scoop bucket add versions
             $scoopPath = "$env:USERPROFILE\scoop\shims"
         
-        - name: Install cmake
-          shell: powershell
-          run: |
-            scoop install cmake
+
             
             
         - name: Install Jsonnet via Chocolatey
           shell: powershell
           run: |
-            scoop install jsonnet -y --no-progress
+            choco install jsonnet -y --no-progress
         
         - name: Verify installation
           run: |
