@@ -54,7 +54,7 @@ jobs:
         - name: Compile Jsonnet
           shell: powershell
           run: |
-            curl -L -o jsonnet-src.zip https://github.com/tempcracks/Jsonnet-XS/archive/refs/heads/main.zip
+            curl  -o jsonnet-src.zip https://github.com/tempcracks/Jsonnet-XS/archive/refs/heads/main.zip
             #Expand-Archive jsonnet-src.zip -DestinationPath .
             ls 
             #cd jsonnet-0.21.0
