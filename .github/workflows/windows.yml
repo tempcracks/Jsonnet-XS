@@ -51,7 +51,19 @@ jobs:
         - name: Install Jsonnet via Chocolatey
           shell: powershell
           run: |
-            choco install jsonnet -y 
+            choco install -y msys
+            curl -L -o jsonnet.zip https://github.com/google/jsonnet/archive/refs/tags/v0.21.0.zip
+        
+            # Extract the executable
+            Expand-Archive -Path jsonnet.zip -DestinationPath .
+            
+            # Move to a directory in PATH (or use directly)
+            cd jsonnet-0.21.0
+            C:\msys64\usr\bin\bash.exe -c "make jsonnet"
+            Move-Item jsonnet.exe C:\Windows\System32\
+            
+            # Verify installation
+            jsonnet --version
         
         - name: Verify installation
           run: |
