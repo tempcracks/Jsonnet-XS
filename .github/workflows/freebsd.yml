@@ -8,8 +8,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     container:
-      image: freebsd/freebsd:13.2-RELEASE
-    name: A job to run test in FreeBSD
+      image: freebsd/freebsd:14.2-RELEASE
     steps:
     - uses: actions/checkout@v4
     - name: Test in FreeBSD
