@@ -38,14 +38,11 @@ jobs:
         - name: Install Scoop
           shell: powershell
           run: |
-            # Set execution policy for current user
-            Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser -Force
-        
-            # Install Scoop to user directory
-            Invoke-RestMethod -Uri https://get.scoop.sh | Invoke-Expression
-            
-            # Add Scoop to PATH for current session
-            $env:PATH = "$env:USERPROFILE\scoop\shims;$env:PATH"
+            Set-ExecutionPolicy RemoteSigned -Scope CurrentUser -Force
+            irm get.scoop.sh | iex
+            scoop bucket add main
+            scoop bucket add extras
+            scoop bucket add versions
         
         - name: Install cmake
           shell: powershell
