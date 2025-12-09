@@ -52,8 +52,9 @@ jobs:
             scoop bucket add main
             scoop install main/cmake
             choco install git -y
-            #curl  -o jsonnet-src.zip https://github.com/tempcracks/jsonnet/archive/refs/heads/master.zip
-            #Expand-Archive jsonnet-src.zip -DestinationPath .
+            scoop bucket add main
+            scoop install main/mingw
+
             git clone https://github.com/tempcracks/jsonnet.git
             ls 
             cd jsonnet
