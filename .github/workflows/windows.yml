@@ -7,9 +7,12 @@ on:
 jobs:
     perl:
       environment: automated_testing
-      runs-on: windows-2025
+      runs-on: ${{ matrix.os }}
       strategy:
         matrix:
+          os: 
+                - windows-2022
+                - windows-2025
           perl: ['5.30', '5.32', '5.34','5.36', '5.38', '5.40', '5.42']
 
       steps:
