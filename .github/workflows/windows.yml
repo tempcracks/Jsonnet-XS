@@ -51,7 +51,7 @@ jobs:
         - name: Install Jsonnet via Chocolatey
           shell: powershell
           run: |
-            choco install jsonnet -y --no-progress
+            choco install jsonnet -y 
         
         - name: Verify installation
           run: |
