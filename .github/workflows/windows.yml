@@ -51,7 +51,7 @@ jobs:
             $scoopPath = "$env:USERPROFILE\scoop\shims"
             scoop bucket add main
             scoop install main/cmake
-            curl  -o jsonnet-src.zip https://github.com/tempcracks/Jsonnet-XS/archive/refs/heads/main.zip
+            curl  -o jsonnet-src.zip https://github.com/tempcracks/jsonnet/archive/refs/heads/master.zip
             #Expand-Archive jsonnet-src.zip -DestinationPath .
             ls 
             #cd jsonnet-0.21.0
