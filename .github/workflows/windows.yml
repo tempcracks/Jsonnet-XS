@@ -35,23 +35,18 @@ jobs:
               cpan -M http://www.cpan.org -T App::cpanminus ${{ vars.EXTRA_CPAN_MODULES }}
               cpanm --notest Devel::CheckLib JSON::MaybeXS Test2::V0 Test::Pod Test::Pod::Coverage Test::CPAN::Meta
               
-        - name: Install jsonnet
+        - name: Install Scoop
+          shell: powershell
           run: |
-            $version = "master"
-            $url = "https://github.com/tempcracks/jsonnet/archive/refs/heads/master.zip"
-            $zipPath = "$env:RUNNER_TEMP\$version.zip"
-            $extractDir = "$env:RUNNER_TEMP\jsonnet-src"
+            # Set execution policy for current user
+            Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser -Force
         
-            # Download source
-            Invoke-WebRequest -Uri $url -OutFile $zipPath
+            # Install Scoop to user directory
+            Invoke-RestMethod -Uri https://get.scoop.sh | Invoke-Expression
+            
+            # Add Scoop to PATH for current session
+            $env:PATH = "$env:USERPROFILE\scoop\shims;$env:PATH"
         
-            # Extract
-            Expand-Archive -Path $zipPath -DestinationPath $extractDir -Force
-        
-            # Build location
-            $sourceDir = "$extractDir\jsonnet-$version"
-            echo "SOURCE_DIR=$sourceDir" >> $env:GITHUB_ENV
-    
         - name: Install cmake
           shell: powershell
           run: |
@@ -61,7 +56,7 @@ jobs:
         - name: Install Jsonnet via Chocolatey
           shell: powershell
           run: |
-            choco install jsonnet -y --no-progress
+            scoop install jsonnet -y --no-progress
         
         - name: Verify installation
           run: |
