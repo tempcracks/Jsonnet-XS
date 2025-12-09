@@ -56,7 +56,7 @@ jobs:
             #Expand-Archive jsonnet-src.zip -DestinationPath .
             git clone https://github.com/tempcracks/jsonnet.git
             ls 
-            cd jsonnet-master
+            cd jsonnet
             ls
             mkdir build
             cd build
