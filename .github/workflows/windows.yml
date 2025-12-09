@@ -44,10 +44,13 @@ jobs:
             scoop bucket add extras
             scoop bucket add versions
             $scoopPath = "$env:USERPROFILE\scoop\shims"
+            scoop bucket add main
+            scoop install main/cmake
+            cmake --version
         
         - name: Install build tools
           run: |
-            choco install visualstudio2022buildtools cmake -y
+            choco install visualstudio2022buildtools -y
             
         - name: Compile Jsonnet
           run: |
