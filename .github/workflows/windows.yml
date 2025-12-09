@@ -52,9 +52,9 @@ jobs:
             scoop bucket add main
             scoop install main/cmake
             curl  -o jsonnet-src.zip https://github.com/tempcracks/jsonnet/archive/refs/heads/master.zip
-            #Expand-Archive jsonnet-src.zip -DestinationPath .
+            Expand-Archive jsonnet-src.zip -DestinationPath .
             ls 
-            #cd jsonnet-0.21.0
+            cd jsonnet-0.21.0
             mkdir build
             cd build
             cmake --version
