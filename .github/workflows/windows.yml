@@ -45,29 +45,20 @@ jobs:
             scoop bucket add versions
             $scoopPath = "$env:USERPROFILE\scoop\shims"
         
-
-            
-            
-        - name: Install Jsonnet via Chocolatey
-          shell: powershell
+        - name: Install build tools
           run: |
-            choco install -y msys
-            curl -L -o jsonnet.zip https://github.com/google/jsonnet/archive/refs/tags/v0.21.0.zip
-        
-            # Extract the executable
-            Expand-Archive -Path jsonnet.zip -DestinationPath .
+            choco install visualstudio2022buildtools cmake -y
             
-            # Move to a directory in PATH (or use directly)
+        - name: Compile Jsonnet
+          run: |
+            curl -L -o jsonnet-src.zip https://github.com/google/jsonnet/archive/refs/tags/v0.21.0.zip
+            Expand-Archive jsonnet-src.zip -DestinationPath .
             cd jsonnet-0.21.0
-            C:\msys64\usr\bin\bash.exe -c "make jsonnet"
-            Move-Item jsonnet.exe C:\Windows\System32\
-            
-            # Verify installation
-            jsonnet --version
-        
-        - name: Verify installation
-          run: |
-            jsonnet --version
+            mkdir build
+            cd build
+            cmake .. -DCMAKE_BUILD_TYPE=Release -G "Visual Studio 17 2022" -A x64
+            cmake --build . --config Release
+            Move-Item .\Release\jsonnet.exe C:\Windows\System32\
 
         - name: Install dependencies
           run: |
