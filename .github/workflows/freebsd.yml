@@ -1,6 +1,8 @@
-name: Test
+name: freebsd
 
-on: [push]
+on:
+  push:
+  pull_request:
 
 jobs:
   test:
@@ -18,17 +20,52 @@ jobs:
         envs: 'MYTOKEN MYTOKEN2'
         usesh: true
         prepare: |
-          
 
-        run: |
-          #pkg install -y curl
-          pwd
-          ls -lah
-          whoami
-          env
-          freebsd-version
-          uname -a
-          #sysctl hw.model
-          sysctl hw.ncpu
-          sysctl hw.physmem
-          sysctl hw.usermem
+    - name: Perl version check
+      run: |
+        perl -V
+      
+    - name: Prepare cpan
+      run: |
+          cpan -M https://www.cpan.org -T App::cpanminus
+          cpanm --notest  ${{ vars.EXTRA_CPANM_MODULES }} ${{ vars.MACOS_EXTRA_CPANM_MODULES }}
+
+    - name: Install configure deps
+      run: |
+          cpanm --notest \
+              Devel::CheckLib \
+              JSON::MaybeXS \
+              Test2::V0 \
+              Test::Pod \
+              Test::Pod::Coverage \
+              Test::CPAN::Meta
+              
+    - name: Install libjsonnet v0.21.0
+      run: |
+          pkg update
+          pkg upgrade
+          pkg install cmake 
+          cmake --version
+          cd /tmp
+          git clone  https://github.com/tempcracks/jsonnet.git
+          cd jsonnet
+          mkdir build
+          cd build
+          cmake ..
+    - name: output makefile
+      run: |
+          #cat /tmp/jsonnet/build/Makefile
+          cd /tmp/jsonnet/build
+          make
+          sudo make install
+          ls -la .
+
+    - name: Build
+      run: |
+
+          perl Makefile.PL
+          make
+
+    - name: Run tests
+      run: |
+          make test
