@@ -35,7 +35,12 @@ jobs:
               cpan -M http://www.cpan.org -T App::cpanminus ${{ vars.EXTRA_CPAN_MODULES }}
               cpanm --notest Devel::CheckLib JSON::MaybeXS Test2::V0 Test::Pod Test::Pod::Coverage Test::CPAN::Meta
               
-        - name: Install Scoop
+        
+        - name: Install build tools
+          run: |
+            choco install visualstudio2022buildtools -y
+            
+        - name: Compile Jsonnet
           shell: powershell
           run: |
             Set-ExecutionPolicy RemoteSigned -Scope CurrentUser -Force
@@ -46,14 +51,6 @@ jobs:
             $scoopPath = "$env:USERPROFILE\scoop\shims"
             scoop bucket add main
             scoop install main/cmake
-        
-        - name: Install build tools
-          run: |
-            choco install visualstudio2022buildtools -y
-            
-        - name: Compile Jsonnet
-          shell: powershell
-          run: |
             curl  -o jsonnet-src.zip https://github.com/tempcracks/Jsonnet-XS/archive/refs/heads/main.zip
             #Expand-Archive jsonnet-src.zip -DestinationPath .
             ls 
