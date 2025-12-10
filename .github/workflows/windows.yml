@@ -54,24 +54,14 @@ jobs:
             pwd
             
 
-        - name: Compile Jsonnet
-          shell: powershell
+        - name: Install dependencies
           run: |
-            ls 
-            
-
-
-            
-          #Move-Item .\Release\jsonnet.exe C:\Windows\System32\
-
-        #- name: Install dependencies
-        #  run: |
-         #   cpan -M https://www.cpan.org -T .
-        #- name: Build
-        #  run: |
-         #     perl Makefile.PL
-         #     make
-       # - name: Run tests
-       #   run: |
-        #      make test
+            cpan -M https://www.cpan.org -T .
+        - name: Build
+          run: |
+              perl JSONNET_PREFIX=D:\a\Jsonnet-XS\Jsonnet-XS\vcpkg\installed\x64-windows Makefile.PL
+              make
+        - name: Run tests
+          run: |
+              make test
 
