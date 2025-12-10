@@ -49,12 +49,13 @@ jobs:
             .\bootstrap-vcpkg.sh
             vcpkg integrate install
             vcpkg install jsonnet
-            ls -al
+            ls
+            jsonnet --version
 
         - name: Compile Jsonnet
           shell: powershell
           run: |
-            ls -al
+            ls 
             
 
 
