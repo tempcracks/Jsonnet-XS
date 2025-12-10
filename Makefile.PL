@@ -17,7 +17,7 @@ my $prefix = defined $opt_prefix ? $opt_prefix : $ENV{JSONNET_PREFIX};
 
 my $inc_flags  = '';
 my $lib_flags;
-if ($^O eq 'MSWin32') {
+if ($^O eq "MSWin32") {
 	$lib_flags  = '-ljsonnet -lstdc++';
 } else {
 	$lib_flags  = '-ljsonnet';
@@ -27,7 +27,7 @@ my %CHECKLIB_ARGS;
 if ($prefix) {
     # Explicit prefix
     $inc_flags = "-I$prefix/include";
-	if ($^O eq 'MSWin32') {
+	if ($^O eq "MSWin32") {
     $lib_flags = "-L$prefix/lib $lib_flags";
 	} else {
 	$lib_flags = "-L$prefix $lib_flags";
