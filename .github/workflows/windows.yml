@@ -46,11 +46,13 @@ jobs:
           run: |
             git clone https://github.com/Microsoft/vcpkg.git
             cd vcpkg
-            .\bootstrap-vcpkg.sh
+            bootstrap-vcpkg.bat
             vcpkg integrate install
             vcpkg install jsonnet
             ls
-            jsonnet --version
+            ls  installed\x64-windows\include
+            pwd
+            
 
         - name: Compile Jsonnet
           shell: powershell
