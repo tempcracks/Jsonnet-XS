@@ -16,10 +16,11 @@ GetOptions(
 my $prefix = defined $opt_prefix ? $opt_prefix : $ENV{JSONNET_PREFIX};
 
 my $inc_flags  = '';
+my $lib_flags;
 if ($^O eq 'MSWin32') {
-	my $lib_flags  = '-ljsonnet -lstdc++';
+	$lib_flags  = '-ljsonnet -lstdc++';
 } else {
-		my $lib_flags  = '-ljsonnet';
+	$lib_flags  = '-ljsonnet';
 }
 my %CHECKLIB_ARGS;
 
