@@ -43,6 +43,7 @@ jobs:
         # We need jq and GNU coreutils to run show-utils.sh and bash to use inline shell string replacement
         prepare: pkg install -y curl sudo jq coreutils bash cmake perl5 p5-App-cpanminus curl ca_root_nss
         run: |
+          sudo -i bash << EOF
           pkg update
           pkg upgrade
           perl --version
@@ -52,5 +53,6 @@ jobs:
           perl Makefile.PL
           make
           make test
+          EOF
 
  
