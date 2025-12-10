@@ -41,13 +41,18 @@ jobs:
         sync: rsync
         copyback: false
         # We need jq and GNU coreutils to run show-utils.sh and bash to use inline shell string replacement
-        prepare: pkg install -y curl sudo jq jsonnet bash cmake perl5 p5-App-cpanminus curl ca_root_nss
+        prepare: pkg install -y curl sudo git jq jsonnet bash cmake perl5 p5-App-cpanminus curl ca_root_nss
         run: |
           sudo -i bash << EOF
           perl --version
           cpanm --notest Devel::CheckLib JSON::MaybeXS Test2::V0 Test::Pod Test::Pod::Coverage Test::CPAN::Meta
           jsonnet --version
-          ls -al
+          git clone https://github.com/neo1ite/Jsonnet-XS.git
+          cd Jsonnet-XS
+          perl Makefile.PL
+          make
+          make test
+          make install
           EOF
 
  
