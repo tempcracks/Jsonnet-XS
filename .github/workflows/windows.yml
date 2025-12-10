@@ -17,7 +17,7 @@ jobs:
             msystem: UCRT64
         - run: |
             set MSYSTEM=UCRT64
-            msys2 -c 'pacman -S mingw-w64-ucrt-x86_64-jsonnet'
+            msys2 -c 'pacman -S mingw-w64-ucrt-x86_64-jsonnet --noconfirm'
         - run: git config --global core.autocrlf false
         - uses: actions/checkout@v4
 
