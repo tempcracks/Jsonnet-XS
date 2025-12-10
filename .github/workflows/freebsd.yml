@@ -1,219 +1,93 @@
-name: CI FreeBSD
+name: FreeBSD
+
+# spell-checker:ignore sshfs usesh vmactions taiki Swatinem esac fdescfs fdesc sccache nextest copyback logind
+
+env:
+  # * style job configuration
+  STYLE_FAIL_ON_FAULT: true ## (bool) fail the build if a style job contains a fault (error or warning); may be overridden on a per-job basis
+
 on:
   pull_request:
+  push:
+    branches:
+      - '*'
 
+permissions:
+  contents: read # to fetch code (actions/checkout)
+
+# End the current execution if there is a new changeset in the PR.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
 
 jobs:
-
-  freebsd_tests:
-
-    name: FreeBSD tests and build
-
-    permissions:
-
-      contents: read
-
-      id-token: write
-
-      attestations: write
-
-    runs-on: ubuntu-24.04
-
-    continue-on-error: true
-
+  style:
+    name: Style and Lint
+    runs-on: ${{ matrix.job.os }}
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        job:
+          - { os: ubuntu-24.04 , features: unix }
+    env:
+      SCCACHE_GHA_ENABLED: "true"
+      RUSTC_WRAPPER: "sccache"
     steps:
-
-      - name: Check out repository
-
-        uses: actions/checkout@v4
-
-        with:
-
-          fetch-depth: 0
-
-          fetch-tags: true
-      - name: Run on FreeBSD
-
-        id: freebsd
-        uses: cross-platform-actions/action@v0.29.0
-        with:
-          operating_system: freebsd
-          version: '14.3'
-          shell: bash
-
-          cpu_count: 3
-          memory: 8G
-          run: |
-            set -euxo pipefail
-            # Update package catalog and install dependencies
-            export IGNORE_OSVERSION=yes
-            sudo -E pkg update -f
-            sudo -E pkg install -y xxhash liblz4 zstd pkgconf
-
-
-            sudo -E pkg install -y fusefs-libs || true
-
-
-            sudo -E pkg install -y fusefs-libs3 || true
-
-
-            sudo -E pkg install -y rust
-
-
-            sudo -E pkg install -y git  # fakeroot causes lots of troubles on freebsd
-
-
-            sudo -E pkg install -y python310 py310-sqlite3
-
-
-            sudo -E pkg install -y python311 py311-sqlite3 py311-pip py311-virtualenv
-
-
-            sudo ln -sf /usr/local/bin/python3.11 /usr/local/bin/python3 || true
-
-
-            sudo ln -sf /usr/local/bin/python3.11 /usr/local/bin/python || true
-
-
-            sudo ln -sf /usr/local/bin/pip3.11 /usr/local/bin/pip3 || true
-
-
-            sudo ln -sf /usr/local/bin/pip3.11 /usr/local/bin/pip || true
-
-            python -m venv .venv
-            . .venv/bin/activate
-            python -V
-            pip -V
-            python -m pip install --upgrade pip wheel
-
-
-            # Install dev requirements and project in editable mode
-
-            pip install -r requirements.d/development.txt
-
-            pip install -e .
-
-
-            # Run tests (skip benchmarks which are slow on CI)
-
-
-            pytest -v -n auto --benchmark-skip
-
-
-            # Only build PyInstaller binaries for tags
-
-
-            if [[ "${GITHUB_REF:-}" == refs/tags/* ]]; then
-
-              python -m pip install 'pyinstaller==6.14.2'
-
-              mkdir -p dist/binary
-
-              pyinstaller --clean --distpath=dist/binary scripts/borg.exe.spec
-
-              # Smoke-test the built binaries and package dir-mode as tarball
-
-              pushd dist/binary
-
-              echo "single-file binary"
-
-
-              chmod +x borg.exe
-
-
-              ./borg.exe -V
-
-
-              echo "single-directory binary"
-
-
-              chmod +x borg-dir/borg.exe
-
-
-              ./borg-dir/borg.exe -V
-
-
-              tar czf borg.tgz borg-dir
-
-
-              popd
-
-
-              # Prepare artifacts
-
-
-              mkdir -p artifacts
-
-
-              if [ -f dist/binary/borg.exe ]; then
-
-
-                cp -v dist/binary/borg.exe artifacts/borg-freebsd-14-x86_64-gh
-              fi
-              if [ -f dist/binary/borg.tgz ]; then
-                cp -v dist/binary/borg.tgz artifacts/borg-freebsd-14-x86_64-gh.tgz
-              fi
-
-            fi
-
-
-
-      - name: Upload FreeBSD artifacts
-
-
-        if: startsWith(github.ref, 'refs/tags/')
-        uses: actions/upload-artifact@v4
-        with:
-          name: freebsd14-dist
-          path: artifacts/*
-          if-no-files-found: ignore
-
-
-      - name: Attest provenance for FreeBSD artifacts
-
-        if: startsWith(github.ref, 'refs/tags/')
-
-        uses: actions/attest-build-provenance@v3
-
-        with:
-
-          subject-path: 'artifacts/*'
-
-      - name: Perl version check
+    - uses: actions/checkout@v6
+      with:
+        persist-credentials: false
+    - uses: Swatinem/rust-cache@v2
+    - name: Run sccache-cache
+      uses: mozilla-actions/sccache-action@v0.0.9
+      with:
+        disable_annotations: true
+    - name: Prepare, build and test
+      uses: vmactions/freebsd-vm@v1.2.9
+      with:
+        usesh: true
+        sync: rsync
+        copyback: false
+        # We need jq and GNU coreutils to run show-utils.sh and bash to use inline shell string replacement
+        prepare: pkg install -y curl sudo jq coreutils bash
         run: |
-          perl -V
+          pkg update
+          
+    - name: Perl version check
+      run: |
+        perl -V
         
-      - name: Prepare cpan
-        run: |
-            pkg install -y perl5 p5-App-cpanminus curl ca_root_nss
-            #cpanm --notest  ${{ vars.EXTRA_CPANM_MODULES }} ${{ vars.MACOS_EXTRA_CPANM_MODULES }}
+    - name: Prepare cpan
+      run: |
+           pkg install -y perl5 p5-App-cpanminus curl ca_root_nss
+           #cpanm --notest  ${{ vars.EXTRA_CPANM_MODULES }} ${{ vars.MACOS_EXTRA_CPANM_MODULES }}
   
-      - name: Install configure deps
-        run: |
-            cpanm --notest Devel::CheckLib JSON::MaybeXS Test2::V0 Test::Pod Test::Pod::Coverage Test::CPAN::Meta
+    - name: Install configure deps
+      run: |
+          cpanm --notest Devel::CheckLib JSON::MaybeXS Test2::V0 Test::Pod Test::Pod::Coverage Test::CPAN::Meta
                 
-      - name: Install libjsonnet v0.21.0
-        run: |
+    - name: Install libjsonnet v0.21.0
+      run: |
             pkg update
             pkg upgrade
             pkg install cmake 
             cmake --version
             pkg install jsonnet
             jsonnet --version
-      - name: output makefile
-        run: |
+    - name: output makefile
+      run: |
             #cat /tmp/jsonnet/build/Makefile
             cd /tmp/jsonnet/build
             make
             sudo make install
             ls -la .
   
-      - name: Build
-        run: |
+    - name: Build
+      run: |
   
             perl Makefile.PL
             make
   
-      - name: Run tests
-        run: |
+    - name: Run tests
+      run: |
             make test
