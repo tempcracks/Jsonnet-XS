@@ -42,11 +42,12 @@ jobs:
           run: |
             choco install visualstudio2022buildtools -y
         - name: install vcpkg
+          shell: powershell
           run: |
             git clone https://github.com/Microsoft/vcpkg.git
             cd vcpkg
-            ./bootstrap-vcpkg.sh
-            ./vcpkg integrate install
+            .\bootstrap-vcpkg.sh
+            .\vcpkg integrate install
             vcpkg install jsonnet
             
         - name: Compile Jsonnet
