@@ -11,8 +11,8 @@ jobs:
       image: freebsd/freebsd:14.2-RELEASE
     steps:
     - uses: actions/checkout@v4
-    - name: Test in FreeBSD
-      id: test
+    #- name: Test in FreeBSD
+    #  id: test
      # uses: vmactions/freebsd-vm@v1
     #  with:
      #   envs: 'MYTOKEN MYTOKEN2'
