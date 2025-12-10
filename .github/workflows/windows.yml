@@ -14,10 +14,10 @@ jobs:
       steps:
         - uses: msys2/setup-msys2@v2
           with:
-            msystem: UCRT64
+            msystem: MINGW64
         - run: |
-            set MSYSTEM=UCRT64
-            msys2 -c 'pacman -S mingw-w64-ucrt-x86_64-jsonnet --noconfirm'
+            set MSYSTEM=MINGW64
+            msys2 -c 'pacman -S mingw-w64-x86_64-gcc mingw-w64-x86_64-cmake --noconfirm'
         - run: git config --global core.autocrlf false
         - uses: actions/checkout@v4
 
@@ -59,7 +59,13 @@ jobs:
             ls 
             cd jsonnet
             ls
-            make CC=clang CXX=clang++
+            mkdir build
+            cd build
+            Write-Host "Configuring with CMake..." -ForegroundColor Cyan
+            Invoke-Msys2 "cd `"$cmakeBuildDir`" && `
+            cmake .. -G 'Ninja' `
+            -DCMAKE_BUILD_TYPE=Release `
+            
           #Move-Item .\Release\jsonnet.exe C:\Windows\System32\
 
         #- name: Install dependencies
