@@ -12,12 +12,12 @@ jobs:
         matrix:
           perl: ['5.30', '5.32', '5.34','5.36', '5.38', '5.40', '5.42']
       steps:
-        - uses: msys2/setup-msys2@v2
-          with:
-            msystem: MINGW64
-        - run: |
-            set MSYSTEM=MINGW64
-            msys2 -c 'pacman -S mingw-w64-x86_64-gcc mingw-w64-x86_64-cmake --noconfirm'
+       #- uses: msys2/setup-msys2@v2
+        #  with:
+        #    msystem: MINGW64
+        #- run: |
+        #    set MSYSTEM=MINGW64
+        #   msys2 -c 'pacman -S mingw-w64-x86_64-gcc mingw-w64-x86_64-cmake --noconfirm'
         - run: git config --global core.autocrlf false
         - uses: actions/checkout@v4
 
@@ -41,6 +41,10 @@ jobs:
         - name: Install build tools
           run: |
             choco install visualstudio2022buildtools -y
+            Invoke-Expression (New-Object System.Net.WebClient).DownloadString('https://get.scoop.sh')
+            scoop bucket add main
+            scoop install cmake gcc g++
+            
         - name: install vcpkg
           shell: powershell
           run: |
@@ -48,9 +52,10 @@ jobs:
             cd vcpkg
             bootstrap-vcpkg.bat
             vcpkg integrate install
-            vcpkg install jsonnet
+            vcpkg install jsonnet 
             ls
             ls  installed\x64-windows\include
+            ls  installed\x64-windows\lib
             pwd
           
         - name: Build
