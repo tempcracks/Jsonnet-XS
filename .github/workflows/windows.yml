@@ -11,19 +11,10 @@ jobs:
       strategy:
         matrix:
           perl: ['5.30', '5.32', '5.34','5.36', '5.38', '5.40', '5.42']
-          sys:
-            - mingw64
-            - mingw32
-            - ucrt64
-            - clang64
       steps:
         - uses: msys2/setup-msys2@v2
           with:
-            msystem: ${{matrix.sys}}
-        - shell: msys2 {0}
-          run: |
-            makepkg-mingw -sCLfc --noconfirm --noprogressbar
-            pacman --noconfirm -U mingw-w64-*-any.pkg.tar.xz
+            msystem: UCRT64
         - run: |
             set MSYSTEM=UCRT64
             msys2 -c 'pacman -S mingw-w64-ucrt-x86_64-jsonnet'
