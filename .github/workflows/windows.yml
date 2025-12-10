@@ -56,7 +56,7 @@ jobs:
         - name: Build
           run: |
               ls
-              perl Makefile.PL --jsonnet-prefix=D:\a\Jsonnet-XS\Jsonnet-XS\vcpkg\installed\x64-windows 
+              perl Makefile.PL --jsonnet-prefix=vcpkg\installed\x64-windows 
               make
         - name: Run tests
           run: |
