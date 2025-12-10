@@ -49,17 +49,14 @@ jobs:
             .\bootstrap-vcpkg.sh
             vcpkg integrate install
             vcpkg install jsonnet
-            
+            ls -al
+
         - name: Compile Jsonnet
           shell: powershell
           run: |
-            Set-ExecutionPolicy RemoteSigned -Scope CurrentUser -Force
-            irm get.scoop.sh | iex
-            scoop bucket add main
-            scoop bucket add extras
-            scoop bucket add versions
-            $scoopPath = "$env:USERPROFILE\scoop\shims"
-            choco install git -y
+            ls -al
+            
+
 
             
           #Move-Item .\Release\jsonnet.exe C:\Windows\System32\
