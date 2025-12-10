@@ -62,9 +62,9 @@ jobs:
             mkdir build
             cd build
             Write-Host "Configuring with CMake..." -ForegroundColor Cyan
-            Invoke-Msys2 "cd `"$cmakeBuildDir`" && `
-            cmake .. -G 'Ninja' `
-            -DCMAKE_BUILD_TYPE=Release `
+            Invoke-Msys2 " `
+            cmake .. `
+            -DCMAKE_BUILD_TYPE=Release `"
             
           #Move-Item .\Release\jsonnet.exe C:\Windows\System32\
 
