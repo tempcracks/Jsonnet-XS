@@ -22,7 +22,11 @@ my %CHECKLIB_ARGS;
 if ($prefix) {
     # Explicit prefix
     $inc_flags = "-I$prefix/include";
-    $lib_flags = "-L$prefix $lib_flags";
+	if ($^O eq 'MSWin32') {
+    $lib_flags = "-L$prefix/lib $lib_flags";
+	} else {
+	$lib_flags = "-L$prefix $lib_flags";
+	}
 
     %CHECKLIB_ARGS = (
         header => 'libjsonnet.h',
