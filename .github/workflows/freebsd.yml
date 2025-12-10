@@ -9,8 +9,8 @@ env:
 on:
   pull_request:
   push:
-    branches:
-      - '*'
+    #branches:
+    #  - '*'
 
 permissions:
   contents: read # to fetch code (actions/checkout)
@@ -30,18 +30,10 @@ jobs:
       matrix:
         job:
             - { os: ubuntu-24.04 , features: unix }
-    env:
-      SCCACHE_GHA_ENABLED: "true"
-      RUSTC_WRAPPER: "sccache"
     steps:
     - uses: actions/checkout@v6
       with:
         persist-credentials: false
-    - uses: Swatinem/rust-cache@v2
-    - name: Run sccache-cache
-      uses: mozilla-actions/sccache-action@v0.0.9
-      with:
-        disable_annotations: true
     - name: Prepare, build and test
       uses: vmactions/freebsd-vm@v1.2.9
       with:
@@ -56,6 +48,7 @@ jobs:
           perl --version
           cpanm --notest Devel::CheckLib JSON::MaybeXS Test2::V0 Test::Pod Test::Pod::Coverage Test::CPAN::Meta
           pkg install jsonnet
+          jsonnet --version
           perl Makefile.PL
           make
           make test
