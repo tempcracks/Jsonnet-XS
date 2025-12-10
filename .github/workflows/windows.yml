@@ -16,6 +16,16 @@ jobs:
           perl: ['5.30', '5.32', '5.34','5.36', '5.38', '5.40', '5.42']
 
       steps:
+        - uses: msys2/setup-msys2@v2
+          with:
+            msystem: MSYS
+        - shell: msys2 {0}
+          run: |
+            makepkg-mingw -sCLfc --noconfirm --noprogressbar
+            pacman --noconfirm -U mingw-w64-*-any.pkg.tar.xz
+        - run: |
+            set MSYSTEM=UCRT64
+            msys2 -c 'pacman -S mingw-w64-ucrt-x86_64-jsonnet'
         - run: git config --global core.autocrlf false
         - uses: actions/checkout@v4
 
@@ -55,20 +65,12 @@ jobs:
             scoop bucket add main
             scoop install main/cmake
             choco install git -y
-            scoop bucket add main
-            scoop install main/mingw
 
             git clone https://github.com/tempcracks/jsonnet.git
             ls 
             cd jsonnet
             ls
-            mkdir build
-            cd build
-            ls
-            cmake --version
-            ls
-            cmake .. 
-            cmake --build . 
+            make
           #Move-Item .\Release\jsonnet.exe C:\Windows\System32\
 
         #- name: Install dependencies
