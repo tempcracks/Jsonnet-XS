@@ -29,7 +29,7 @@ jobs:
       fail-fast: false
       matrix:
         job:
-          - { os: ubuntu-24.04 , features: unix }
+            - { os: ubuntu-24.04 , features: unix }
     env:
       SCCACHE_GHA_ENABLED: "true"
       RUSTC_WRAPPER: "sccache"
@@ -49,45 +49,15 @@ jobs:
         sync: rsync
         copyback: false
         # We need jq and GNU coreutils to run show-utils.sh and bash to use inline shell string replacement
-        prepare: pkg install -y curl sudo jq coreutils bash
+        prepare: pkg install -y curl sudo jq coreutils bash cmake perl5 p5-App-cpanminus curl ca_root_nss
         run: |
           pkg update
-          
-    - name: Perl version check
-      run: |
-        perl -V
-        
-    - name: Prepare cpan
-      run: |
-           pkg install -y perl5 p5-App-cpanminus curl ca_root_nss
-           #cpanm --notest  ${{ vars.EXTRA_CPANM_MODULES }} ${{ vars.MACOS_EXTRA_CPANM_MODULES }}
-  
-    - name: Install configure deps
-      run: |
+          pkg upgrade
+          perl --version
           cpanm --notest Devel::CheckLib JSON::MaybeXS Test2::V0 Test::Pod Test::Pod::Coverage Test::CPAN::Meta
-                
-    - name: Install libjsonnet v0.21.0
-      run: |
-            pkg update
-            pkg upgrade
-            pkg install cmake 
-            cmake --version
-            pkg install jsonnet
-            jsonnet --version
-    - name: output makefile
-      run: |
-            #cat /tmp/jsonnet/build/Makefile
-            cd /tmp/jsonnet/build
-            make
-            sudo make install
-            ls -la .
-  
-    - name: Build
-      run: |
-  
-            perl Makefile.PL
-            make
-  
-    - name: Run tests
-      run: |
-            make test
+          pkg install jsonnet
+          perl Makefile.PL
+          make
+          make test
+
+ 
