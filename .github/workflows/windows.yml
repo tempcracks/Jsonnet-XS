@@ -51,8 +51,6 @@ jobs:
             scoop bucket add extras
             scoop bucket add versions
             $scoopPath = "$env:USERPROFILE\scoop\shims"
-            scoop bucket add main
-            scoop install main/cmake
             choco install git -y
 
             git clone https://github.com/tempcracks/jsonnet.git
@@ -61,10 +59,7 @@ jobs:
             ls
             mkdir build
             cd build
-            Write-Host "Configuring with CMake..." -ForegroundColor Cyan
-            Invoke-Msys2 " `
-            cmake .. `
-            -DCMAKE_BUILD_TYPE=Release `"
+            cmake .. 
             
           #Move-Item .\Release\jsonnet.exe C:\Windows\System32\
 
