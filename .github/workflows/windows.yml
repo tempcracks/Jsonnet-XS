@@ -41,6 +41,13 @@ jobs:
         - name: Install build tools
           run: |
             choco install visualstudio2022buildtools -y
+        - name: install vcpkg
+          run: |
+            git clone https://github.com/Microsoft/vcpkg.git
+            cd vcpkg
+            ./bootstrap-vcpkg.sh
+            ./vcpkg integrate install
+            vcpkg install jsonnet
             
         - name: Compile Jsonnet
           shell: powershell
@@ -53,13 +60,6 @@ jobs:
             $scoopPath = "$env:USERPROFILE\scoop\shims"
             choco install git -y
 
-            git clone https://github.com/tempcracks/jsonnet.git
-            ls 
-            cd jsonnet
-            ls
-            mkdir build
-            cd build
-            cmake .. 
             
           #Move-Item .\Release\jsonnet.exe C:\Windows\System32\
 
