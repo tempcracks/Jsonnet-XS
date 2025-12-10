@@ -6,7 +6,7 @@
 [![Perl](https://img.shields.io/badge/perl-5.30%2B-blue.svg)](https://www.perl.org/)
 [![CI](https://github.com/neo1ite/Jsonnet-XS/actions/workflows/ci.yml/badge.svg)](https://github.com/neo1ite/Jsonnet-XS/actions/workflows/ci.yml)
 [![MacOS](https://github.com/tempcracks/Jsonnet-XS/actions/workflows/macos.yml/badge.svg)](https://github.com/tempcracks/Jsonnet-XS/actions/workflows/macos.yml)
-[![FreeBSD](https://github.com/tempcracks/Jsonnet-XS/blob/main/.github/workflows/freebsd.yml/badge.svg)](https://github.com/tempcracks/Jsonnet-XS/blob/main/.github/workflows/freebsd.yml)
+[![FreeBSD](https://github.com/tempcracks/Jsonnet-XS/actions/workflows/freebsd.yml/badge.svg)](https://github.com/tempcracks/Jsonnet-XS/blob/main/.github/workflows/freebsd.yml)
 [![ZH](https://img.shields.io/badge/Language-Chinese.svg)](https://github.com/tempcracks/Jsonnet-XS/blob/main/doc/README.zh.md)
 
 Perl XS bindings to **libjsonnet** (Google Jsonnet C/C++ API).
