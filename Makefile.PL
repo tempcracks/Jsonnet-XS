@@ -28,7 +28,7 @@ if ($prefix) {
     # Explicit prefix
     $inc_flags = "-I$prefix/include";
 	if ($^O eq "MSWin32") {
-    $lib_flags = "-L$prefix/lib $lib_flags";
+    $lib_flags = "-L$prefix\lib $lib_flags";
 	} else {
 	$lib_flags = "-L$prefix $lib_flags";
 	}
@@ -135,7 +135,10 @@ WriteMakefile(
         OTHERLDFLAGS => '-Wl,-rpath,/usr/local/lib'
     }) : ()),
     XS                 => { 'Jsonnet.xs' => 'Jsonnet.c' },
-
+	CC					=> 'gcc'
+	CPP 				=> 'g++'
+	LD					=> 'ld'
+	
     TYPEMAPS           => [ 'typemap' ],
 
     clean              => { FILES => 'Jsonnet.c Jsonnet.o cover_db MYMETA.*' },
