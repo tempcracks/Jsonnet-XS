@@ -69,7 +69,7 @@ Before need install `cpanm`
 ### Debian / Ubuntu
 
 ```bash
-sudo apt install cpanm
+sudo apt install cpanminus
 ````
 
 ### Fedora
