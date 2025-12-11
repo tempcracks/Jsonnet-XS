@@ -136,7 +136,7 @@ WriteMakefile(
     }) : ()),
     XS                 => { 'Jsonnet.xs' => 'Jsonnet.c' },
 	CC					=> 'gcc'
-	CPP 				=> 'g++'
+	CPPRUN				=> 'g++'
 	LD					=> 'ld'
 	
     TYPEMAPS           => [ 'typemap' ],
