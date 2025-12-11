@@ -62,7 +62,7 @@ jobs:
           run: |
               ls
               perl Makefile.PL --jsonnet-prefix=vcpkg\installed\x64-windows 
-              make CC=x86_64-w64-mingw32-clang CXX=x86_64-w64-mingw32-clang++
+              make CC=x86_64-w64-mingw32-clang
         - name: Run tests
           run: |
               make test
