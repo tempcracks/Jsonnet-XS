@@ -17,7 +17,7 @@ jobs:
             msystem: MINGW64
         - run: |
             set MSYSTEM=MINGW64
-            msys2 -c 'pacman -S mingw-w64-x86_64-gcc mingw-w64-x86_64-cmake mingw-w64-clang-x86_64-clang --noconfirm'
+            msys2 -c 'pacman -S mingw-w64-x86_64-gcc --noconfirm'
         - run: git config --global core.autocrlf false
         - uses: actions/checkout@v4
 
