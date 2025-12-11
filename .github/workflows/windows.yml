@@ -62,7 +62,7 @@ jobs:
           run: |
               ls
               perl Makefile.PL --jsonnet-prefix=vcpkg\installed\x64-windows 
-              make CC=gcc CPPRUN=g++ LD=g++
+              make 
         - name: Run tests
           run: |
               make test
