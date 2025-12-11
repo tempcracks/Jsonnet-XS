@@ -42,8 +42,7 @@ jobs:
           run: |
             choco install visualstudio2022buildtools -y
             Invoke-Expression (New-Object System.Net.WebClient).DownloadString('https://get.scoop.sh')
-            scoop bucket add main
-            scoop install cmake gcc g++
+            scoop install cmake gcc
             
         - name: install vcpkg
           shell: powershell
