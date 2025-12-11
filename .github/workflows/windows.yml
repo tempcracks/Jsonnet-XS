@@ -12,12 +12,12 @@ jobs:
         matrix:
           perl: ['5.30', '5.32', '5.34','5.36', '5.38', '5.40', '5.42']
       steps:
-       #- uses: msys2/setup-msys2@v2
-        #  with:
-        #    msystem: MINGW64
-        #- run: |
-        #    set MSYSTEM=MINGW64
-        #   msys2 -c 'pacman -S mingw-w64-x86_64-gcc mingw-w64-x86_64-cmake --noconfirm'
+        - uses: msys2/setup-msys2@v2
+          with:
+            msystem: MINGW64
+        - run: |
+            set MSYSTEM=MINGW64
+            msys2 -c 'pacman -S mingw-w64-x86_64-gcc mingw-w64-x86_64-cmake mingw-w64-clang-x86_64-clang --noconfirm'
         - run: git config --global core.autocrlf false
         - uses: actions/checkout@v4
 
@@ -61,7 +61,7 @@ jobs:
           run: |
               ls
               perl Makefile.PL --jsonnet-prefix=vcpkg\installed\x64-windows 
-              make
+              make CC=clang CXX=clang++
         - name: Run tests
           run: |
               make test
